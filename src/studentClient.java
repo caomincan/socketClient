@@ -1,12 +1,9 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -40,7 +37,7 @@ public class studentClient {
     public List<String> getResponse() throws IOException{
     	System.out.println("Get Response from Server:");
     	List<String> response = new LinkedList<String>();
-    	BufferedReader in = new BufferedReader(new InputStreamReader(this.myClient.getInputStream()));
+    	BufferedReader in = new BufferedReader(new InputStreamReader(myClient.getInputStream()));
     	String line = null;
     	while((line=in.readLine()) != null){
     		response.add(line);
@@ -79,7 +76,8 @@ public class studentClient {
         		List<String> response = client.getResponse();
         		// Save the file
         		client.saveFile(requestFileName, response);
-        		
+        		// close stream
+        		sys.close();   		
         	} catch(UnknownHostException unknow){
         		System.out.println("Unknow Host.");
         	} catch(IOException e){
